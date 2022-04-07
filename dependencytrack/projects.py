@@ -44,7 +44,7 @@ class Projects:
         if response.status_code == 200:
             return response.json()
         else:
-            description = f"Error while getting property for project {uuid}"
+            description = f"Error while getting property fogit r project {uuid}"
             raise DependencyTrackApiError(description, response)
 
     def get_project_dependency(self, uuid):
@@ -66,7 +66,28 @@ class Projects:
         else:
             description = f"Error while getting dependency for project {uuid}"
             raise DependencyTrackApiError(description, response)
-            
+
+    def get_project_violation(self, uuid):
+        """Get violations of project dependency.
+    
+        API Endpoint: GET /violation/project/{uuid}
+    
+        :param uuid: the ID of the project to be analysed
+        :type uuid: uuid string
+        :return: violations of the project
+        :rtype: project dependency dict
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        
+        response = self.session.get(self.api + f"/violation/project/{uuid}", params=self.paginated_param_payload)
+        print(response.url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while getting violations for project {uuid}"
+            raise DependencyTrackApiError(description, response)
+
+
     def get_project(self, uuid):
         """Get details of project.
     
